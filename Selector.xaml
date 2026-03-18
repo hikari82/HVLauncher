@@ -1,0 +1,51 @@
+﻿<Window x:Class="HVLauncher.Selector"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Denuvo Hypervisor Launcher Creator" Height="400" Width="1200" Icon="icon.ico" Closing="Window_Closing" >
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <StackPanel Orientation="Horizontal" Width="355" Margin="0,0,0,0.2">
+                <Button Name="BtnAdd" Content="Add Row" Width="80" Margin="0,0,10,0"/>
+                <Button x:Name="BtnCreate" Content="Create Shortcut" Width="107" Margin="0,0,10,0.2"/>
+                <Button x:Name="BtnDelete" Content="Delete Row" Width="80" Margin="0,0,10,0.2"/>
+            </StackPanel>
+            <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,0.2" Width="535">
+                <Label x:Name="lblhvtype" Visibility="Collapsed" ></Label>
+                <Label x:Name="lblcorei"  Visibility="Collapsed" ></Label>
+                <Label x:Name="lblvbs"  Visibility="Collapsed" ></Label>
+                <CheckBox x:Name="cbRevert" Checked="cbRevert_Checked" Unchecked="cbRevert_Checked" ToolTip="Set HypervisorLaunchType=Auto, Virtual Based Security=On upon Reboot" Margin="0,0,0,0.2" Width="149" >Restore Security</CheckBox>
+                <Button x:Name="btnRestart" Click="btnRestart_Click" ToolTip="This is Required, without it PC will BSOD or Hangs when running Hypervisor" Content="Set Hypervisor Off, VBS Off" Margin="0,0,0,0.2" Width="171"></Button>
+            </StackPanel>
+        </StackPanel>
+        <DataGrid Name="DataGridCsv" Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Icon" Width="50" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding IconImage}" Width="32" Height="32"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Game Product Name" Binding="{Binding GameName}" Width="*"/>
+                <DataGridTemplateColumn Header="Launch Denuvo Service" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding LaunchService, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      Checked="LaunchServiceChanged"
+                      Unchecked="LaunchServiceChanged"
+                      HorizontalAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Game Executeable Path" Binding="{Binding GamePath}" Width="*"/>
+                <DataGridTextColumn Header="Hypervisor Driver Path" Binding="{Binding HVPath}" Width="*"/>
+                <DataGridTextColumn Header="Game Filename" Binding="{Binding filename}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
